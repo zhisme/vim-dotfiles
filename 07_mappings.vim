@@ -31,3 +31,7 @@ nnoremap ª :tablast <CR>
 " alt-9 ta last tab
 "
 nnoremap <c-P> <cmd>lua require('fzf-lua').files()<CR>
+
+" Github copilot
+nnoremap <leader>cod <cmd>Copilot disable<CR>
+nnoremap <leader>coe <cmd>Copilot enable<CR>

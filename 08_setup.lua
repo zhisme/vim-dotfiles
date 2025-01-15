@@ -31,7 +31,7 @@ require("neo-tree").setup({
 })
 
 -- zsh
-vim.opt.shell = '/bin/zsh -l'
+-- vim.opt.shell = '/bin/zsh -l'
 
 -- fzf
 vim.cmd [[
@@ -44,7 +44,7 @@ vim.opt.grepprg = 'rg --color=never'
 -- 3rd/image preview images
 require("image").setup({
   backend = "kitty",
-  processor = "magick_rock", -- or "magick_cli"
+  processor = "magick_cli", -- or "magick_rock"
   integrations = {
     markdown = {
       enabled = true,
