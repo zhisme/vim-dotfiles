@@ -33,5 +33,4 @@ nnoremap ª :tablast <CR>
 nnoremap <c-P> <cmd>lua require('fzf-lua').files()<CR>
 
 " Github copilot
-nnoremap <leader>cod <cmd>Copilot disable<CR>
-nnoremap <leader>coe <cmd>Copilot enable<CR>
+nnoremap <F12> :call CopilotToggle(g:copilot_toggle)<CR>

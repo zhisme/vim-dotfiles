@@ -36,8 +36,8 @@ Plugin 'github/copilot.vim'
 
 Plugin 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plugin 'nvim-neo-tree/neo-tree.nvim'
-Plugin 'nvim-tree/nvim-web-devicons' 
-Plugin 'nvim-lua/plenary.nvim' 
+Plugin 'nvim-tree/nvim-web-devicons'
+Plugin 'nvim-lua/plenary.nvim'
 Plugin 'MunifTanjim/nui.nvim'
 Plugin '3rd/image.nvim'
 

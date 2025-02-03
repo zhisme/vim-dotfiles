@@ -5,8 +5,9 @@ local configs = {
   '04_colorscheme.vim',
   '05_autocommands.vim',
   '06_linters.vim',
-  '07_mappings.vim',
+  '07_user_functions.vim',
   '08_setup.lua',
+  '09_mappings.vim',
 }
 
 -- Vim profile load counter
