@@ -1,2 +1,2 @@
 set background=dark
-colorscheme open-color
+colorscheme eldritch

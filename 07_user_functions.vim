@@ -1,4 +1,4 @@
-let g:copilot_toggle = 0
+let g:copilot_toggle = 1 " enabled by default
 function CopilotToggle(copilot_toggle)
   if g:copilot_toggle == 0
     :Copilot enable
