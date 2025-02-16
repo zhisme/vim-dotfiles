@@ -34,6 +34,7 @@ Plugin 'dense-analysis/ale'
 Plugin 'posva/vim-vue'
 Plugin 'hashivim/vim-terraform'
 Plugin 'github/copilot.vim'
+Plugin 'kdheepak/lazygit.nvim'
 
 Plugin 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plugin 'nvim-neo-tree/neo-tree.nvim'
