@@ -25,6 +25,7 @@ Plugin 'nvim-neo-tree/neo-tree.nvim'
 Plugin 'nvim-tree/nvim-web-devicons'
 Plugin 'nvim-lua/plenary.nvim'
 Plugin 'MunifTanjim/nui.nvim'
+Plugin 'zhisme/copy_with_context.vim'
 
 call vundle#end()
 
