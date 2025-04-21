@@ -35,8 +35,3 @@ nnoremap <c-P> <cmd>lua require('fzf-lua').files()<CR>
 " Github copilot
 nnoremap <F12> :call CopilotToggle(g:copilot_toggle)<CR>
 nnoremap <F10> <cmd>LazyGit<CR>
-
-let g:copy_with_context_mappings = {
-      \ 'relative': '<leader>cy',
-      \ 'absolute': '<leader>cY'
-      \ }

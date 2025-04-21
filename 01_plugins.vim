@@ -1,31 +1,28 @@
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin()
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ervandew/supertab'
-Plugin 'tpope/vim-endwise'
-Plugin 'eldritch-theme/eldritch.nvim'
-Plugin 'tpope/vim-commentary'
-Plugin 'vim-airline/vim-airline'
-Plugin 'slim-template/vim-slim'
+Plug 'tpope/vim-fugitive'
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-endwise'
+Plug 'eldritch-theme/eldritch.nvim'
+Plug 'tpope/vim-commentary'
+Plug 'vim-airline/vim-airline'
+Plug 'slim-template/vim-slim'
 
-Plugin 'elixir-editors/vim-elixir'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'elzr/vim-json'
-Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'dense-analysis/ale'
-Plugin 'github/copilot.vim'
-Plugin 'kdheepak/lazygit.nvim'
+Plug 'elixir-editors/vim-elixir'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'elzr/vim-json'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'dense-analysis/ale'
+Plug 'github/copilot.vim'
+Plug 'kdheepak/lazygit.nvim'
 
-Plugin 'ibhagwan/fzf-lua', {'branch': 'main'}
-Plugin 'nvim-neo-tree/neo-tree.nvim'
-Plugin 'nvim-tree/nvim-web-devicons'
-Plugin 'nvim-lua/plenary.nvim'
-Plugin 'MunifTanjim/nui.nvim'
-Plugin 'zhisme/copy_with_context.vim'
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'zhisme/copy_with_context.nvim'
 
-call vundle#end()
+call plug#end()
 
