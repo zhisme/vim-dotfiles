@@ -1,7 +1,6 @@
 call plug#begin()
 
 Plug 'tpope/vim-fugitive'
-Plug 'ervandew/supertab'
 Plug 'tpope/vim-endwise'
 Plug 'eldritch-theme/eldritch.nvim'
 Plug 'tpope/vim-commentary'
