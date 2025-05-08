@@ -12,8 +12,8 @@ let g:ale_linters = {
 let g:ale_fixers = {
  \ 'javascript': ['eslint'],
  \ 'elixir': ['mix_format'],
- \ 'typescript': ['prettier'],
- \ 'typescriptreact': ['prettier'],
+ \ 'typescript': ['eslint'],
+ \ 'typescriptreact': ['eslint'],
  \ 'json': ['prettier'],
  \ 'eruby': ['erblint'],
  \ 'ruby': ['rubocop']
