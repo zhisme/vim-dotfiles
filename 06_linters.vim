@@ -16,7 +16,8 @@ let g:ale_fixers = {
  \ 'typescriptreact': ['eslint'],
  \ 'json': ['prettier'],
  \ 'eruby': ['erblint'],
- \ 'ruby': ['rubocop']
+ \ 'ruby': ['rubocop'],
+ \ 'go': ['gofmt'],
  \ }
 let g:ale_set_highlights = 0
 let g:ale_ruby_rubocop_executable = 'bundle'
