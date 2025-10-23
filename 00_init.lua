@@ -25,3 +25,7 @@ end
 
 -- Track profile load
 _G.profile_loads = _G.profile_loads + 1
+
+-- set dynamic title showing current working directory
+vim.opt.title = true
+vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')} - nvim"
