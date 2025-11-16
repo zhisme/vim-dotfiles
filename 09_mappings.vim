@@ -29,9 +29,10 @@ nnoremap ¶ 7gt <CR>
 nnoremap • 8gt <CR>
 nnoremap ª :tablast <CR>
 " alt-9 ta last tab
-"
+
+" Grepping/finding
 nnoremap <c-P> <cmd>lua require('fzf-lua').files()<CR>
-nnoremap <c-G> <cmd>lua require('fzf-lua').git_grep()<CR>
+nnoremap <c-G> <cmd>lua require('fzf-lua').live_grep({cmd = "git grep --line-number --column --color=always"})<CR>
 
 " Github copilot
 nnoremap <F12> :call CopilotToggle(g:copilot_toggle)<CR>
