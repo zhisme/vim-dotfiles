@@ -9,16 +9,23 @@
 local function open_lazygit(cmd)
   cmd = cmd or 'lazygit'
 
+  print("DEBUG: open_lazygit called with: " .. cmd)
+  print("DEBUG: Current mode: " .. vim.api.nvim_get_mode().mode)
+  print("DEBUG: Current window: " .. vim.api.nvim_get_current_win())
+
   -- Calculate window size (90% of screen)
   local width = math.floor(vim.o.columns * 0.9)
   local height = math.floor(vim.o.lines * 0.9)
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
 
+  print("DEBUG: Creating buffer...")
   -- Create buffer
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+  print("DEBUG: Buffer created: " .. buf)
 
+  print("DEBUG: Creating floating window...")
   -- Create floating window
   local win = vim.api.nvim_open_win(buf, true, {
     relative = 'editor',
@@ -29,10 +36,14 @@ local function open_lazygit(cmd)
     style = 'minimal',
     border = 'rounded'
   })
+  print("DEBUG: Window created: " .. win)
+  print("DEBUG: Current window after open_win: " .. vim.api.nvim_get_current_win())
 
+  print("DEBUG: Calling termopen...")
   -- Start lazygit terminal
   local job_id = vim.fn.termopen(cmd, {
     on_exit = function(job_id, exit_code, event_type)
+      print("DEBUG: Lazygit exited with code: " .. exit_code)
       if vim.api.nvim_win_is_valid(win) then
         vim.api.nvim_win_close(win, true)
       end
@@ -40,10 +51,16 @@ local function open_lazygit(cmd)
   })
 
   if job_id > 0 then
+    print("DEBUG: Terminal started with job ID: " .. job_id)
+    print("DEBUG: Mode before startinsert: " .. vim.api.nvim_get_mode().mode)
+
     -- Enter insert mode immediately (this is the key!)
     vim.cmd('startinsert')
+
+    print("DEBUG: Mode after startinsert: " .. vim.api.nvim_get_mode().mode)
+    print("DEBUG: Lazygit should be visible now!")
   else
-    print("Error: Failed to start " .. cmd)
+    print("ERROR: Failed to start " .. cmd .. " - job_id: " .. job_id)
     vim.api.nvim_win_close(win, true)
   end
 end
@@ -60,7 +77,9 @@ vim.cmd([[
 
 -- Create our own commands using our working implementation
 vim.api.nvim_create_user_command('LazyGit', function()
+  print("DEBUG: LazyGit command called!")
   open_lazygit('lazygit')
+  print("DEBUG: LazyGit command finished!")
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitCurrentFile', function()
