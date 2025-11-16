@@ -7,6 +7,7 @@ local configs = {
   '06_linters.vim',
   '07_user_functions.vim',
   '08_setup.lua',
+  '10_lazygit_fix.lua',
   '09_mappings.vim',
 }
 

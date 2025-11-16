@@ -111,6 +111,7 @@ The configuration is organized into modular files:
 - `06_linters.vim` - ALE linter and fixer configuration
 - `07_user_functions.vim` - Custom functions (Copilot toggle)
 - `08_setup.lua` - Lua plugin configurations (neo-tree, fzf, copy_with_context)
+- `10_lazygit_fix.lua` - Fix for lazygit.nvim blank window issue
 - `09_mappings.vim` - Key mappings and shortcuts
 
 ## Key Mappings
