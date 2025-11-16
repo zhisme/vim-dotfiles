@@ -2,10 +2,55 @@
 -- The plugin doesn't call startinsert after opening the terminal,
 -- causing the window to appear blank in some terminal emulators.
 
--- This must be loaded AFTER the lazygit commands are defined
--- We redefine the commands to add startinsert with proper timing
+-- Instead of trying to fix the plugin, we create our own simple implementation
+-- that does exactly what works in the test file
 
--- Delete the existing commands first
+local M = {}
+
+-- Simple function to open lazygit in a floating window
+function M.open_lazygit(cmd)
+  cmd = cmd or 'lazygit'
+
+  -- Calculate window size (90% of screen)
+  local width = math.floor(vim.o.columns * 0.9)
+  local height = math.floor(vim.o.lines * 0.9)
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  -- Create buffer
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+
+  -- Create floating window
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = 'minimal',
+    border = 'rounded'
+  })
+
+  -- Start lazygit terminal
+  local job_id = vim.fn.termopen(cmd, {
+    on_exit = function(job_id, exit_code, event_type)
+      if vim.api.nvim_win_is_valid(win) then
+        vim.api.nvim_win_close(win, true)
+      end
+    end
+  })
+
+  if job_id > 0 then
+    -- Enter insert mode immediately (this is the key!)
+    vim.cmd('startinsert')
+  else
+    print("Error: Failed to start " .. cmd)
+    vim.api.nvim_win_close(win, true)
+  end
+end
+
+-- Delete the original lazygit.nvim commands
 vim.cmd([[
   silent! delcommand LazyGit
   silent! delcommand LazyGitCurrentFile
@@ -15,49 +60,39 @@ vim.cmd([[
   silent! delcommand LazyGitConfig
 ]])
 
--- Helper function to call lazygit function and enter insert mode
-local function call_lazygit_with_insert(fn_name)
-  local lazygit = require('lazygit')
-  local fn = lazygit[fn_name]
-
-  if fn then
-    fn()
-    -- Multiple attempts with increasing delays to catch the window
-    for i = 1, 5 do
-      vim.defer_fn(function()
-        if vim.api.nvim_get_mode().mode ~= 'i' then
-          local win = vim.api.nvim_get_current_win()
-          local config = vim.api.nvim_win_get_config(win)
-          if config.relative ~= "" then
-            vim.cmd('startinsert')
-          end
-        end
-      end, i * 20) -- Try at 20ms, 40ms, 60ms, 80ms, 100ms
-    end
-  end
-end
-
--- Redefine all commands
+-- Create our own commands using our working implementation
 vim.api.nvim_create_user_command('LazyGit', function()
-  call_lazygit_with_insert('lazygit')
+  M.open_lazygit('lazygit')
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitCurrentFile', function()
-  call_lazygit_with_insert('lazygitcurrentfile')
+  local file = vim.fn.expand('%:p')
+  if file ~= '' then
+    M.open_lazygit('lazygit -f ' .. vim.fn.shellescape(file))
+  else
+    M.open_lazygit('lazygit')
+  end
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitFilter', function()
-  call_lazygit_with_insert('lazygitfilter')
+  M.open_lazygit('lazygit --filter')
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitFilterCurrentFile', function()
-  call_lazygit_with_insert('lazygitfiltercurrentfile')
+  local file = vim.fn.expand('%:p')
+  if file ~= '' then
+    M.open_lazygit('lazygit --filter ' .. vim.fn.shellescape(file))
+  else
+    M.open_lazygit('lazygit --filter')
+  end
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitLog', function()
-  call_lazygit_with_insert('lazygitlog')
+  M.open_lazygit('lazygit log')
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitConfig', function()
-  require('lazygit').lazygitconfig()
+  M.open_lazygit('lazygit --edit-config')
 end, {})
+
+return M
