@@ -5,10 +5,8 @@
 -- Instead of trying to fix the plugin, we create our own simple implementation
 -- that does exactly what works in the test file
 
-local M = {}
-
 -- Simple function to open lazygit in a floating window
-function M.open_lazygit(cmd)
+local function open_lazygit(cmd)
   cmd = cmd or 'lazygit'
 
   -- Calculate window size (90% of screen)
@@ -62,37 +60,35 @@ vim.cmd([[
 
 -- Create our own commands using our working implementation
 vim.api.nvim_create_user_command('LazyGit', function()
-  M.open_lazygit('lazygit')
+  open_lazygit('lazygit')
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitCurrentFile', function()
   local file = vim.fn.expand('%:p')
   if file ~= '' then
-    M.open_lazygit('lazygit -f ' .. vim.fn.shellescape(file))
+    open_lazygit('lazygit -f ' .. vim.fn.shellescape(file))
   else
-    M.open_lazygit('lazygit')
+    open_lazygit('lazygit')
   end
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitFilter', function()
-  M.open_lazygit('lazygit --filter')
+  open_lazygit('lazygit --filter')
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitFilterCurrentFile', function()
   local file = vim.fn.expand('%:p')
   if file ~= '' then
-    M.open_lazygit('lazygit --filter ' .. vim.fn.shellescape(file))
+    open_lazygit('lazygit --filter ' .. vim.fn.shellescape(file))
   else
-    M.open_lazygit('lazygit --filter')
+    open_lazygit('lazygit --filter')
   end
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitLog', function()
-  M.open_lazygit('lazygit log')
+  open_lazygit('lazygit log')
 end, {})
 
 vim.api.nvim_create_user_command('LazyGitConfig', function()
-  M.open_lazygit('lazygit --edit-config')
+  open_lazygit('lazygit --edit-config')
 end, {})
-
-return M
