@@ -31,6 +31,7 @@ nnoremap ª :tablast <CR>
 " alt-9 ta last tab
 "
 nnoremap <c-P> <cmd>lua require('fzf-lua').files()<CR>
+nnoremap <c-G> <cmd>lua require('fzf-lua').git_grep()<CR>
 
 " Github copilot
 nnoremap <F12> :call CopilotToggle(g:copilot_toggle)<CR>
