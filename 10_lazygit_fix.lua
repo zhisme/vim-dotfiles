@@ -1,32 +1,18 @@
 -- Fix for lazygit.nvim blank window issue
--- The plugin doesn't call startinsert after opening the terminal,
--- causing the window to appear blank in some terminal emulators.
+-- This is the working implementation - simple floating window with startinsert
 
--- Instead of trying to fix the plugin, we create our own simple implementation
--- that does exactly what works in the test file
-
--- Simple function to open lazygit in a floating window
-local function open_lazygit(cmd)
-  cmd = cmd or 'lazygit'
-
-  print("DEBUG: open_lazygit called with: " .. cmd)
-  print("DEBUG: Current mode: " .. vim.api.nvim_get_mode().mode)
-  print("DEBUG: Current window: " .. vim.api.nvim_get_current_win())
-
-  -- Calculate window size (90% of screen)
+-- Create a global function that can be called from anywhere
+_G.OpenLazyGit = function()
+  -- Calculate window size
   local width = math.floor(vim.o.columns * 0.9)
   local height = math.floor(vim.o.lines * 0.9)
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
 
-  print("DEBUG: Creating buffer...")
   -- Create buffer
   local buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
-  print("DEBUG: Buffer created: " .. buf)
 
-  print("DEBUG: Creating floating window...")
-  -- Create floating window
+  -- Create window
   local win = vim.api.nvim_open_win(buf, true, {
     relative = 'editor',
     width = width,
@@ -36,14 +22,10 @@ local function open_lazygit(cmd)
     style = 'minimal',
     border = 'rounded'
   })
-  print("DEBUG: Window created: " .. win)
-  print("DEBUG: Current window after open_win: " .. vim.api.nvim_get_current_win())
 
-  print("DEBUG: Calling termopen...")
-  -- Start lazygit terminal
-  local job_id = vim.fn.termopen(cmd, {
+  -- Start lazygit in the buffer
+  local job_id = vim.fn.termopen('lazygit', {
     on_exit = function(job_id, exit_code, event_type)
-      print("DEBUG: Lazygit exited with code: " .. exit_code)
       if vim.api.nvim_win_is_valid(win) then
         vim.api.nvim_win_close(win, true)
       end
@@ -51,63 +33,10 @@ local function open_lazygit(cmd)
   })
 
   if job_id > 0 then
-    print("DEBUG: Terminal started with job ID: " .. job_id)
-    print("DEBUG: Mode before startinsert: " .. vim.api.nvim_get_mode().mode)
-
     -- Enter insert mode immediately (this is the key!)
     vim.cmd('startinsert')
-
-    print("DEBUG: Mode after startinsert: " .. vim.api.nvim_get_mode().mode)
-    print("DEBUG: Lazygit should be visible now!")
   else
-    print("ERROR: Failed to start " .. cmd .. " - job_id: " .. job_id)
+    print("ERROR: Failed to start lazygit")
     vim.api.nvim_win_close(win, true)
   end
 end
-
--- Delete the original lazygit.nvim commands
-vim.cmd([[
-  silent! delcommand LazyGit
-  silent! delcommand LazyGitCurrentFile
-  silent! delcommand LazyGitFilter
-  silent! delcommand LazyGitFilterCurrentFile
-  silent! delcommand LazyGitLog
-  silent! delcommand LazyGitConfig
-]])
-
--- Create our own commands using our working implementation
-vim.api.nvim_create_user_command('LazyGit', function()
-  print("DEBUG: LazyGit command called!")
-  open_lazygit('lazygit')
-  print("DEBUG: LazyGit command finished!")
-end, {})
-
-vim.api.nvim_create_user_command('LazyGitCurrentFile', function()
-  local file = vim.fn.expand('%:p')
-  if file ~= '' then
-    open_lazygit('lazygit -f ' .. vim.fn.shellescape(file))
-  else
-    open_lazygit('lazygit')
-  end
-end, {})
-
-vim.api.nvim_create_user_command('LazyGitFilter', function()
-  open_lazygit('lazygit --filter')
-end, {})
-
-vim.api.nvim_create_user_command('LazyGitFilterCurrentFile', function()
-  local file = vim.fn.expand('%:p')
-  if file ~= '' then
-    open_lazygit('lazygit --filter ' .. vim.fn.shellescape(file))
-  else
-    open_lazygit('lazygit --filter')
-  end
-end, {})
-
-vim.api.nvim_create_user_command('LazyGitLog', function()
-  open_lazygit('lazygit log')
-end, {})
-
-vim.api.nvim_create_user_command('LazyGitConfig', function()
-  open_lazygit('lazygit --edit-config')
-end, {})
