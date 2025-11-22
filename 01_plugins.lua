@@ -88,14 +88,21 @@ return {
   -- Copy with context
   {
     'zhisme/copy_with_context.nvim',
+    branch = 'claude/implement-changes-01Ct6f1YhtsXyDNCCePSeJVY',
     config = function()
       require('copy_with_context').setup({
         mappings = {
           relative = '<leader>cy',
-          absolute = '<leader>cY'
+          absolute = '<leader>cY',
+          remote = '<leader>cr',
+          complex = '<leader>cx',
         },
         trim_lines = false,
-        context_format = '# %s:%s',
+        formats = {
+          default = '# {filepath}:{line}',
+          remote = '# {remote_url}',
+          complex = '# {filepath}:{line}\n# {remote_url}',
+        },
       })
     end,
   },
