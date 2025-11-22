@@ -8,8 +8,8 @@ nmap <Leader>hl :set hlsearch! hlsearch?<CR>
 " vnoremap p "0p
 
 if has("mac") || has("gui_macvim") || has("gui_mac")
-  " copy relative path
-  nnoremap <leader>cf :let @*=expand("%")<CR>
+  " copy relative path (relative to current working directory)
+  nnoremap <leader>cf :let @*=expand("%:.")<CR>
   " copy absolute path
   nnoremap <leader>cF :let @*=expand("%:p")<CR>
   " copy filename
