@@ -14,13 +14,16 @@ Plug 'elzr/vim-json'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'dense-analysis/ale'
 Plug 'github/copilot.vim'
-Plug 'kdheepak/lazygit.nvim'
 
+" Core dependencies - must load before plugins that use them
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'MunifTanjim/nui.nvim'
+
+" Plugins that depend on the above
+Plug 'kdheepak/lazygit.nvim'
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'nvim-neo-tree/neo-tree.nvim'
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'MunifTanjim/nui.nvim'
 Plug 'zhisme/copy_with_context.nvim'
 
 call plug#end()

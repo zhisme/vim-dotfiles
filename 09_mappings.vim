@@ -36,4 +36,4 @@ nnoremap <c-G> <cmd>lua require('fzf-lua').live_grep({cmd = "git grep --line-num
 
 " Github copilot
 nnoremap <F12> :call CopilotToggle(g:copilot_toggle)<CR>
-nnoremap <F10> <cmd>LazyGit<CR>
+nnoremap <F10> <cmd>lua OpenLazyGit()<CR>
