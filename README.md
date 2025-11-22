@@ -2,6 +2,8 @@
 
 A modular, feature-rich Neovim configuration focused on modern development workflows with support for multiple programming languages.
 
+> **Note:** This configuration now uses **Lazy.nvim** for plugin management. For migration details from vim-plug, see [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md).
+
 ## Features
 
 ### Core Functionality
@@ -11,6 +13,13 @@ A modular, feature-rich Neovim configuration focused on modern development workf
 - **Smart defaults** for editing, searching, and navigation
 
 ### Plugins & Tools
+
+#### Plugin Management
+- **Lazy.nvim** - Modern plugin manager with:
+  - Automatic bootstrap (no manual installation needed)
+  - Lazy loading for faster startup
+  - Beautiful UI for managing plugins
+  - Built-in profiling and update capabilities
 
 #### File Navigation & Search
 - **neo-tree.nvim** - Modern file explorer with git status integration
@@ -54,7 +63,7 @@ A modular, feature-rich Neovim configuration focused on modern development workf
 ## Installation
 
 ### Prerequisites
-- Neovim (required - Vim is not supported)
+- Neovim 0.8+ (required - Vim is not supported)
 - Git
 - curl
 
@@ -72,8 +81,7 @@ cd ~/.vim-dotfiles
 The install script will:
 1. Create symlinks for `.vimrc` in your home directory
 2. Set up `init.vim` for Neovim at `~/.config/nvim/`
-3. Download and install vim-plug package manager
-4. Backup any existing configuration files
+3. Backup any existing configuration files
 
 ### Manual Installation
 
@@ -84,34 +92,44 @@ ln -s ~/.vim-dotfiles/.vimrc ~/.vimrc
 # Copy init.vim for Neovim
 mkdir -p ~/.config/nvim/
 cp ~/.vim-dotfiles/init.vim ~/.config/nvim/init.vim
-
-# Install vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
 
 ### Install Plugins
 
-After installation, open Neovim and run:
+**Lazy.nvim** will automatically bootstrap itself and install all plugins on first launch!
+
+Simply open Neovim:
+
+```bash
+nvim
+```
+
+Lazy.nvim will:
+1. Clone itself if not already installed
+2. Automatically install all configured plugins
+3. Show a progress window during installation
+
+After installation, you can manage plugins with:
 
 ```vim
-:PlugInstall
+:Lazy          " Open Lazy.nvim UI
+:Lazy update   " Update all plugins
+:Lazy sync     " Install, update, and clean plugins
 ```
 
 ## Configuration Structure
 
 The configuration is organized into modular files:
 
-- `00_init.lua` - Initialization and config loader
-- `01_plugins.vim` - Plugin definitions (vim-plug)
+- `00_init.lua` - Lazy.nvim bootstrap, initialization, runtime setup, and config loader
+- `01_plugins.lua` - Plugin definitions and configurations (Lazy.nvim)
 - `02_options.vim` - Editor options and settings
 - `03_variables.vim` - Custom variables
 - `04_colorscheme.vim` - Theme configuration
 - `05_autocommands.vim` - Auto-commands (filetype detection, whitespace removal)
 - `06_linters.vim` - ALE linter and fixer configuration
 - `07_user_functions.vim` - Custom functions (Copilot toggle)
-- `08_setup.lua` - Lua plugin configurations (neo-tree, fzf, copy_with_context)
-- `10_lazygit_fix.lua` - Fix for lazygit.nvim blank window issue
+- `10_lazygit_fix.lua` - Custom lazygit implementation
 - `09_mappings.vim` - Key mappings and shortcuts
 
 ## Key Mappings
@@ -175,13 +193,39 @@ The configuration is organized into modular files:
 ## Customization
 
 ### Adding Plugins
-Add plugins to `01_plugins.vim` between `plug#begin()` and `plug#end()`:
+Add plugins to `01_plugins.lua` in the returned table:
 
-```vim
-Plug 'username/plugin-name'
+```lua
+-- Simple plugin
+'username/plugin-name',
+
+-- Plugin with configuration
+{
+  'username/plugin-name',
+  dependencies = { 'dep1', 'dep2' },
+  config = function()
+    require('plugin-name').setup({
+      -- your config here
+    })
+  end,
+}
+
+-- Lazy-loaded plugin (loaded on command)
+{
+  'username/plugin-name',
+  cmd = 'PluginCommand',
+}
 ```
 
-Then run `:PlugInstall` in Neovim.
+Lazy.nvim will automatically install new plugins on next launch, or run `:Lazy sync`.
+
+### Plugin Manager Commands
+- `:Lazy` - Open plugin manager UI
+- `:Lazy update` - Update all plugins
+- `:Lazy sync` - Install, update, and clean plugins
+- `:Lazy clean` - Remove unused plugins
+- `:Lazy profile` - View plugin load times
+- `:Lazy log` - View update log
 
 ### Modifying Key Mappings
 Edit `09_mappings.vim` to customize shortcuts.
