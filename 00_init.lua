@@ -44,6 +44,15 @@ require("lazy").setup(plugins, {
   },
 })
 
+-- Additional runtime setup
+-- fzf
+vim.cmd [[
+  set rtp+=/usr/local/opt/fzf
+]]
+
+-- ripgrep
+vim.opt.grepprg = 'rg --color=never'
+
 -- Configuration files to load after plugins
 local configs = {
   '02_options.vim',
@@ -52,7 +61,6 @@ local configs = {
   '05_autocommands.vim',
   '06_linters.vim',
   '07_user_functions.vim',
-  '08_setup.lua',
   '10_lazygit_fix.lua',
   '09_mappings.vim',
 }

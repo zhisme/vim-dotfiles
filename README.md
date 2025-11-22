@@ -121,7 +121,7 @@ After installation, you can manage plugins with:
 
 The configuration is organized into modular files:
 
-- `00_init.lua` - Lazy.nvim bootstrap, initialization, and config loader
+- `00_init.lua` - Lazy.nvim bootstrap, initialization, runtime setup, and config loader
 - `01_plugins.lua` - Plugin definitions and configurations (Lazy.nvim)
 - `02_options.vim` - Editor options and settings
 - `03_variables.vim` - Custom variables
@@ -129,7 +129,6 @@ The configuration is organized into modular files:
 - `05_autocommands.vim` - Auto-commands (filetype detection, whitespace removal)
 - `06_linters.vim` - ALE linter and fixer configuration
 - `07_user_functions.vim` - Custom functions (Copilot toggle)
-- `08_setup.lua` - Additional runtime setup (fzf, ripgrep)
 - `10_lazygit_fix.lua` - Custom lazygit implementation
 - `09_mappings.vim` - Key mappings and shortcuts
 
