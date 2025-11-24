@@ -88,7 +88,7 @@ return {
   -- Copy with context
   {
     'zhisme/copy_with_context.nvim',
-    branch = 'claude/implement-changes-01Ct6f1YhtsXyDNCCePSeJVY',
+    branch = 'master',
     config = function()
       require('copy_with_context').setup({
         mappings = {
