@@ -20,6 +20,7 @@ return {
   'elixir-editors/vim-elixir',
   'elzr/vim-json',
   'maxmellon/vim-jsx-pretty',
+  'hashivim/vim-terraform',
 
   -- Linting
   'dense-analysis/ale',
