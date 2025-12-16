@@ -25,9 +25,6 @@ return {
   -- Linting
   'dense-analysis/ale',
 
-  -- AI assistance
-  'github/copilot.vim',
-
   -- Core dependencies
   'nvim-lua/plenary.nvim',
   'nvim-tree/nvim-web-devicons',
