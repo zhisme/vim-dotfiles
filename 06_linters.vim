@@ -1,6 +1,8 @@
 let g:ale_elixir_elixir_ls_release=expand("~/dev/elixir/elixir-ls/rel")
 
 let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
+" let g:ale_use_neovim_lsp_api = 0
+" let g:ale_c_clangd_executable = '/opt/homebrew/opt/llvm/bin/clangd'
 let g:ale_linters = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'ruby': ['brakeman', 'rubocop'],
@@ -8,6 +10,7 @@ let g:ale_linters = {
   \ 'rust': ['analyzer'],
   \ 'elixir': ['elixir-ls'],
   \ 'go': ['gofmt', 'gopls', 'go vet'],
+  \ 'c': [],
   \ }
 let g:ale_fixers = {
  \ 'javascript': ['eslint'],
