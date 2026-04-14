@@ -99,7 +99,10 @@ return {
         formats = {
           default = '# {filepath}:{line}',
           remote = '# {remote_url}',
-          markdown = "```\n{copied_text}\n```\n\n*{filepath}:{line}*",  -- Wrap in markdown code block
+        },
+        output_formats = {
+          default = "{copied_text}\n\n# {filepath}:{line}",
+          markdown = "```\n{copied_text}\n```\n\n{filepath}:{line}",
         },
       })
     end,
