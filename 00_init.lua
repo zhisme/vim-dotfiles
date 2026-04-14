@@ -60,7 +60,6 @@ local configs = {
   '04_colorscheme.vim',
   '05_autocommands.vim',
   '06_linters.vim',
-  '07_user_functions.vim',
   '10_lazygit_fix.lua',
   '09_mappings.vim',
 }

@@ -93,13 +93,13 @@ return {
           relative = '<leader>cy',
           absolute = '<leader>cY',
           remote = '<leader>cr',
-          complex = '<leader>cx',
+          markdown = '<leader>cx',
         },
         trim_lines = false,
         formats = {
           default = '# {filepath}:{line}',
           remote = '# {remote_url}',
-          complex = '# {filepath}:{line}\n# {remote_url}',
+          markdown = "```\n{copied_text}\n```\n\n*{filepath}:{line}*",  -- Wrap in markdown code block
         },
       })
     end,
