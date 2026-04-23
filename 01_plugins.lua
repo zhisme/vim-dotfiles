@@ -83,6 +83,30 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
 
+  -- Paste images from clipboard
+  {
+    'HakonHarnes/img-clip.nvim',
+    event = 'VeryLazy',
+    opts = {
+      default = {
+        dir_path = '%:p:h',
+        file_name = 'image-%H%M%S',
+        relative_to_current_file = true,
+        prompt_for_file_name = false,
+        use_absolute_path = false,
+      },
+      filetypes = {
+        markdown = {
+          url_encode_path = true,
+          template = '![$CURSOR]($FILE_PATH)',
+        },
+      },
+    },
+    keys = {
+      { '<leader>pi', '<cmd>PasteImage<cr>', mode = { 'n' }, desc = 'Paste image from clipboard' },
+    },
+  },
+
   -- Copy with context
   {
     'zhisme/copy_with_context.nvim',
